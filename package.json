@@ -1,0 +1,16 @@
+{
+  "name": "allegro",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "ay <shelmafona@gmail.com>",
+  "license": "ISC",
+  "dependencies": {
+    "allegro-rest-client": "^1.1.1",
+    "axios": "^0.21.1",
+    "express": "^4.17.1"
+  }
+}
