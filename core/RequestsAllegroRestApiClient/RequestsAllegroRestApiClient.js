@@ -39,10 +39,11 @@ class RequestsAllegroRestApiClient extends AllegroRestApiClient {
                     id:offer_id, 
                     sellingMode:offer_sellingMode
                 } = totalOffersRequestRes.offers[i];
-                const offer_price =  (offer_sellingMode && offer_sellingMode.price) ? offer_sellingMode.price.amount : null;
-
-                const offerDetails = await this.request(`${OFFERS_URI}/${offer_id}`);
                 
+                const offer_price =  (offer_sellingMode && offer_sellingMode.price) ? offer_sellingMode.price.amount : null;
+                const offerDetails = await this.request(`${OFFERS_URI}/${offer_id}`);                
+                
+                const img = (offerDetails.images[0]) ? offerDetails.images[0].url : '';                
                 const sku = offerDetails.parameters.reduce(
                     (result, param) => (param.id === OFFER_DETAILS_PARAM_ID_SKU) ? param.values[0] : result
                 , '');
@@ -51,7 +52,11 @@ class RequestsAllegroRestApiClient extends AllegroRestApiClient {
                     id: offer_id,
                     sku,
                     barcode: offerDetails.ean,
-                    price: offer_price
+                    price: offer_price,
+                    img,
+                    stock_available: offerDetails.stock.available,
+                    publication_status: offerDetails.publication.status,
+                    url: `https://allegro.pl/offer/${offer_id}`
                 });
             }                
     
