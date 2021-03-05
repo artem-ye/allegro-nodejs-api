@@ -40,7 +40,7 @@ class AllegroRestApiClient {
         return tokens;
     }
 
-    async request(endpoint, opts={}) {
+    async request(endpoint, method='GET', opts={}) {
         if (this._isTokensExpired()) {  
             // console.log('Updating tokens...');
             await this._refreshToken().catch(err => {
@@ -52,7 +52,7 @@ class AllegroRestApiClient {
         const tokens = this._getTokens();      
         const requestOptions = {
             url: `${this.apiUrl}${endpoint}`,
-            method: 'GET',
+            method,
             ...opts,
             headers: {
               Authorization: `Bearer ${tokens.access_token}`,
@@ -62,8 +62,8 @@ class AllegroRestApiClient {
         };
 
         const res = await request(requestOptions).catch(err => {
-            const msg = `AllegroRestApiClient::request: ${err.response.statusText} ${err.response.status} ${err.response.data}`;            
-            throw new Error(err);
+            const msg = `AllegroRestApiClient::request: ${err.response.statusText} ${JSON.stringify(err.response.status)} ${JSON.stringify(err.response.data)}`;            
+            throw new Error(msg);
         });
         
         return Promise.resolve(res.data);                                

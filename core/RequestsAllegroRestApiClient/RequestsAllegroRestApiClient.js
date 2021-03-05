@@ -56,7 +56,9 @@ class RequestsAllegroRestApiClient extends AllegroRestApiClient {
                     img,
                     stock_available: offerDetails.stock.available,
                     publication_status: offerDetails.publication.status,
-                    url: `https://allegro.pl/offer/${offer_id}`
+                    url: `https://allegro.pl/offer/${offer_id}`,
+                    createdAt: offerDetails.createdAt,
+                    updatedAt: offerDetails.updatedAt
                 });
             }                
     
